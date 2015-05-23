@@ -8,3 +8,5 @@ upload/*
 .settings
 
 nohup.out
+web.js
+
