@@ -10,9 +10,9 @@ function newProfileWidget() {
         self.become(u);             
     }
 
-    var selector = $('<select/>');
-    var okButton = $('<button><b>Become</b></button>');
-    var deleteButton = $('<button>Delete</button>');
+    var selector = $('<select class="identity" />');
+    var okButton = $('<button class="identity" ><b>Become</b></button>');
+    var deleteButton = $('<button class="identity" >Delete</button>');
 
 	function disableBecome() {
         selector.attr('disabled', 'disabled');
@@ -23,6 +23,7 @@ function newProfileWidget() {
     var otherSelves = self.get('otherSelves');
     if (!otherSelves) {
         selector.append('<option>' + self.myself().name + '</option>');
+        $('.identity').hide();
 		disableBecome();
     }
     else {

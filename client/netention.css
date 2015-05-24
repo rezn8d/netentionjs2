@@ -2,7 +2,8 @@
  * netention.css v1.5
  * Discombobulated by @rezn8d
  */
-
+.brand { margin-right:10px;}
+#SearchControls {display:none;}
 .ui-autocomplete {  z-index: 5000 !important; }
 
 .focusMap {
@@ -571,10 +572,10 @@ body { width:100%; height:100%; margin:0px; padding:0px; overflow:hidden; font-f
 #toggle-submenu {
 	position:absolute; top: 55px; left: 5px; width: 45px; max-width: 45px;
 }
-#toggle-submenu button { padding: 1px; }
-#toggle-submenu input { width: 43px; }
+#toggle-submenu button { padding: 7px 0; margin-bottom:3px; }
+#toggle-submenu #v-slider { height:200px; display:block; margin:10px auto; width:12px }
 
-#ViewMenu { position: fixed; z-index:15; top:0; left:0; width:600px; margin:0; padding:0; }
+#ViewMenu { position: fixed; z-index:15; top:0; left:0; width:600px; margin:0; padding:0; background:#fff; background-color:rgba(255,255,255,0.8); }
 	.viewmenu-container { position: relative; display:block; padding: 10px;	overflow: visible; text-align:center; }
 	#AvatarButton, #AvatarButton img { width: 70px; height: 70px; margin:0; padding:0; z-index:25;} 
 		#AvatarButton { position:absolute; top:0px; left:0px; margin:0px; padding:0px; }
@@ -746,7 +747,7 @@ body { width:100%; height:100%; margin:0px; padding:0px; overflow:hidden; font-f
 
 @media (min-width : 700px) {
 	#welcome { text-align:center; }
-	#logout { position:absolute !important; top:5px; right:18px; margin:0; padding:5px 10px; moz-box-shadow: 0px 0px 12px #000000; -webkit-box-shadow: 0px 0px 12px #000000; box-shadow:0px 0px 12px #000000; -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#444444')"; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=3, Direction=135, Color='#444444'); }
+	#logout { position:absolute !important; top:5px; right:18px; margin:0; padding:5px 10px;  }
 #ViewMenu { width:600px; }
 	#close-menu { position: absolute; top:13px; left:598px; right:auto; z-index:14; text-decoration:none;}
 #ViewControls {	margin:20px 0px 10px 0px; display:block; text-align:center; clear:both; }

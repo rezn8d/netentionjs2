@@ -34,7 +34,7 @@ function _updateView(force) {
 
     var o = $('#ViewOptions');
     var v = $('#View');
-	var submenu = $('#toggle-submenu');
+    var submenu = $('#toggle-submenu');
 
     if (v.is(':visible')) {    }
     else
@@ -51,8 +51,8 @@ function _updateView(force) {
 
     v.html('');
     o.html('');
-	submenu.html('');
-	submenu.hide();
+    submenu.html('');
+    submenu.hide();
 
     lastView = view;
 
@@ -63,7 +63,7 @@ function _updateView(force) {
     v.removeClass('nobg');
     
     function indent() {
-		submenu.show();
+        submenu.show();
         v.addClass('overthrow ui-widget-content view-indented');        
     }
 
@@ -115,7 +115,7 @@ function _updateView(force) {
 }
 
 
-
+/*
 
 function setTheme(t) {
     if (!t)
@@ -149,7 +149,7 @@ function setTheme(t) {
     
 }
 
-
+*/
 
 function popupAboutDialog() {
     $.get('/about.html', function(d) {
@@ -160,57 +160,57 @@ function popupAboutDialog() {
 
 $(document).ready(function() {
 
-	
+    
     if (configuration.enableAnonymous)
         $('#AnonymousLoginButton').show();
-        	
-	$('.logout').show();
+            
+    $('.logout').show();
 
-	function newLoginButton() {
-		var lb = $('<button>Login</button>');
-		lb.click(function() {
-		    $('#LoadingSplash').show();
-		});
-		return lb;
-	}
+    function newLoginButton() {
+        var lb = $('<button>Login</button>');
+        lb.click(function() {
+            $('#LoadingSplash').show();
+        });
+        return lb;
+    }
 
-	var ii = identity();
+    var ii = identity();
     if (ii == ID_UNKNOWN) {
-		if (configuration.requireIdentity) {
-		    $('#LoadingSplash').show();
-	        return;
-		}
-		else {
-			$('#welcome').html(newLoginButton());
-		    $('#LoadingSplash').hide();
-		}
-	}
-	else {
-	    $('#LoadingSplash').hide();
-	}
+        if (configuration.requireIdentity) {
+            $('#LoadingSplash').show();
+            return;
+        }
+        else {
+            $('#welcome').html(newLoginButton());
+            $('#LoadingSplash').hide();
+        }
+    }
+    else {
+        $('#LoadingSplash').hide();
+    }
     
-	var ll = $.pnotify({
-		title: 'Loading...'
-	});
+    var ll = $.pnotify({
+        title: 'Loading...'
+    });
 
     netention(function(self) {
-		ll.pnotify({
-			text: 'System loaded.'
-		});
+        ll.pnotify({
+            text: 'System loaded.'
+        });
 
         window.self = self;
         
-        setTheme(self.get('theme'));
+    //    setTheme(self.get('theme'));
 
         self.clear();
 
         self.loadSchemaJSON('/schema/json', function() {            
-			ll.pnotify({
-					text: 'Schema ready. Loading objects...'
-			});
+            ll.pnotify({
+                    text: 'Schema ready. Loading objects...'
+            });
 
             self.getLatestObjects(configuration.maxStartupObjects, function() {
-				ll.hide();
+                ll.hide();
 
                 self.listenAll(true);
 
@@ -263,10 +263,10 @@ $(document).ready(function() {
                 
                 $('body').timeago();
                 updateView = _.throttle(function() {
-					later(function() {
-						_updateView();
-					});
-				}, 850);
+                    later(function() {
+                        _updateView();
+                    });
+                }, 850);
 
                 function doUpdate() {
                     updateView();
@@ -293,39 +293,39 @@ $(document).ready(function() {
                     $('#View').show();
                     $('#LoadingSplash2').hide();
 
-					if (isAnonymous()) {
-						//show profile chooser
-						openSelectProfileModal("Anonymous Profiles");
-					}
-					else if (self.myself() === undefined)  {
-						if (configuration.requireIdentity)
-							openSelectProfileModal("Start a New Profile");
-					}
+                    if (isAnonymous()) {
+                        //show profile chooser
+                        openSelectProfileModal("Anonymous Profiles");
+                    }
+                    else if (self.myself() === undefined)  {
+                        if (configuration.requireIdentity)
+                            openSelectProfileModal("Start a New Profile");
+                    }
                 });
 
-				var ii = identity();
-			                
+                var ii = identity();
+                            
                 if (ii === ID_AUTHENTICATED) {
-			        $.pnotify({
-		               title: 'Authorized.',
-		               text: self.myself().name
-		            });
+                    $.pnotify({
+                       title: 'Authorized.',
+                       text: self.myself().name
+                    });
                 }
-				else if (ii === ID_ANONYMOUS) {
-			        $.pnotify({
-		               title: 'Anonymous.'
-		            });
-				}
-				else {
-			        var nn = $.pnotify({
-		                title: 'Unidentified.',
-						text: 'Read-only public access.  <b><a class="loginlink" href="#">Login</a>?</b>'
-		            });
-					$('.loginlink').click(function() {
-					    $('#LoadingSplash').show();
-						nn.hide();
-					});
-				}
+                else if (ii === ID_ANONYMOUS) {
+                    $.pnotify({
+                       title: 'Anonymous.'
+                    });
+                }
+                else {
+                    var nn = $.pnotify({
+                        title: 'Unidentified.',
+                        text: 'Read-only public access.  <b><a class="loginlink" href="#">Login</a>?</b>'
+                    });
+                    $('.loginlink').click(function() {
+                        $('#LoadingSplash').show();
+                        nn.hide();
+                    });
+                }
                 
             });
         });
@@ -336,14 +336,27 @@ $(document).ready(function() {
 
 
     $('#logout').hover(
-		function() { $(this).addClass('ui-state-hover');$(this).addClass('shadow'); },
-		function() { $(this).removeClass('ui-state-hover');$(this).removeClass('shadow'); }
-	);
+        function() { $(this).addClass('ui-state-hover'); },
+        function() { $(this).removeClass('ui-state-hover'); }
+    );
 
 
     $('#close-menu').button();
     $("#ViewControls").buttonset();   
-	
+    
+    function showMe(e) {
+      if (e.is(":visible")) {
+        e.hide();
+      } else {
+        e.show();
+      }
+    }
+
+
+
+    $('#SearchContentButton').click(function() {
+            showMe($('#SearchControls'));
+    });
     $('#about-toggle').click(function() {
             $('#about-netention').fadeIn();
     });
@@ -353,7 +366,7 @@ $(document).ready(function() {
     
     var focusValue;
     function clearFocus() {
-		$('#FocusKeywords').val('');
+        $('#FocusKeywords').val('');
         focusValue = { tags: [], when: null, where: null };       
     }
     clearFocus();
@@ -363,53 +376,53 @@ $(document).ready(function() {
         
         var fe = $('#FocusEdit');
         fe.html('');
-		var noe = newObjectEdit(focusValue, true, true, function(xx) {
-			focusValue = xx;
-			renderFocus();
-		}, function(x) {
-			focusValue = x;
-			self.setFocus(x);
-		});
+        var noe = newObjectEdit(focusValue, true, true, function(xx) {
+            focusValue = xx;
+            renderFocus();
+        }, function(x) {
+            focusValue = x;
+            self.setFocus(x);
+        });
 
         fe.append(noe);
 
 
-		if (focusValue.when) {
-		}
-		if (focusValue.where) {
-			var uu = uuid();
-			var m = newDiv(uu);
-			m.attr('style', 'height: 150px; width: 95%');	//TODO use css
-			fe.append(m);
-			var lmap = initLocationChooserMap(uu, focusValue.where, 3);
-		}
-	}
+        if (focusValue.when) {
+        }
+        if (focusValue.where) {
+            var uu = uuid();
+            var m = newDiv(uu);
+            m.attr('style', 'height: 150px; width: 95%');   //TODO use css
+            fe.append(m);
+            var lmap = initLocationChooserMap(uu, focusValue.where, 3);
+        }
+    }
 
     $('#FocusWhereButton').click(function() {
-	if (!focusValue.where) {
-		focusValue.where = _.clone(objSpacePoint(self.myself()) || { lat: 40, lon: -79, planet: 'Earth'} );
-	    renderFocus();
-	}
-	else {
-		if(confirm("Remove focus's 'Where'?")) {
-			focusValue.where = null;
-		        renderFocus();
-		}
-	}
+    if (!focusValue.where) {
+        focusValue.where = _.clone(objSpacePoint(self.myself()) || { lat: 40, lon: -79, planet: 'Earth'} );
+        renderFocus();
+    }
+    else {
+        if(confirm("Remove focus's 'Where'?")) {
+            focusValue.where = null;
+                renderFocus();
+        }
+    }
     });
 
-	var periodMS = 2000;
-	var ty = _.throttle(function() {
-				var t = $('#FocusKeywords').val();
-				focusValue.name = t;
-				self.setFocus(focusValue);			
-			}, periodMS);
+    var periodMS = 2000;
+    var ty = _.throttle(function() {
+                var t = $('#FocusKeywords').val();
+                focusValue.name = t;
+                self.setFocus(focusValue);          
+            }, periodMS);
 
-	$('#FocusKeywords').keyup(
-		function() {
-			ty();
-		}
-	);
+    $('#FocusKeywords').keyup(
+        function() {
+            ty();
+        }
+    );
 
       
     $('#FocusClearButton').click(function() {
@@ -432,13 +445,13 @@ $(document).ready(function() {
         renderFocus();
     });
 
-	//TODO ABSTRACT this into a pluggable focus template system
+    //TODO ABSTRACT this into a pluggable focus template system
 
     $('#FocusNeedButton').click(function() {
-		var needs = [ 'Volunteer', 'Shelter', 'Food', 'Tools', 'Health', 'Transport', 'Service', 'Animal' ];
-		_.each(needs, function(n) {
-			objAddValue(focusValue, { id: n });
-		});
+        var needs = [ 'Volunteer', 'Shelter', 'Food', 'Tools', 'Health', 'Transport', 'Service', 'Animal' ];
+        _.each(needs, function(n) {
+            objAddValue(focusValue, { id: n });
+        });
         renderFocus();
     });
 });
