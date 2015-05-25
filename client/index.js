@@ -115,7 +115,7 @@ function _updateView(force) {
 }
 
 
-/*
+
 
 function setTheme(t) {
     if (!t)
@@ -137,11 +137,11 @@ function setTheme(t) {
         themeURL = 'theme/' + t + '.css';
         if (t === 'Dark') inverse = true;
     }
-    else {
+/*    else {
         themeURL = 'lib/jquery-ui/1.10.3/themes/' + t + '/jquery-ui.min.css';
         if (t === 'ui-darkness') inverse = true;
     }
-    
+*/    
     $('head').append('<link class="themecss" href="' + themeURL + '" type="text/css" rel="stylesheet"/>');
     if (inverse) {
         $('head').append('<link class="themecss" href="/theme/black-background.css" type="text/css" rel="stylesheet"/>');
@@ -149,7 +149,6 @@ function setTheme(t) {
     
 }
 
-*/
 
 function popupAboutDialog() {
     $.get('/about.html', function(d) {
@@ -200,7 +199,7 @@ $(document).ready(function() {
 
         window.self = self;
         
-    //    setTheme(self.get('theme'));
+      //  setTheme(self.get('theme'));
 
         self.clear();
 
@@ -352,7 +351,8 @@ $(document).ready(function() {
       }
     }
 
-
+    $('button').button();
+    $('#welcome a').button();
 
     $('#SearchContentButton').click(function() {
             showMe($('#SearchControls'));

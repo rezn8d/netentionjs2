@@ -30,7 +30,7 @@
 
 </head>
 
-    <body>
+    <body class="nt-theme-light">
 
         <!-- LOGIN SCREEN -->
         <div id="LoadingSplash" style="display: none">        
@@ -66,30 +66,29 @@
         <div id="toggle-menu" style="display:none;" class="ui-corner-all"><img id="toggle-img" title="Click here to expand the control panel" class="ui-corner-all" alt="toggle menu button" src="icon/netention-button.png" /></div>
 		<div id="toggle-submenu"></div>
         <div id="close-menu" class="close-menu" style="display:none;" title="Click here to close the control panel"><span class="ui-icon ui-icon-closethick"></span></div>
-        <div id="AvatarButton" class="ui-corner-br shadow" style="display:none;"><img id="avatar-img" class="ui-corner-br" alt="avatar image" src="icon/load.gif" /></div>
+        <div id="AvatarButton" class="ui-corner-all nt-border" style="display:none;"><img id="avatar-img" alt="avatar image" src="icon/load.gif" /></div>
         <div id="ViewMenu" style="display:none;" class="ui-widget shadow overthrow">
             <div class="viewmenu-container">
                 <!-- <li class="viz"><a class="ui-button" id="time" title="Timeline" href="#"><b class="icon-time"></b><span class="display-menu-collapse">Timeline</span></a></li> -->
                 <!-- <li><button id="FocusToggleButton" title="Toggle Fullsize" ><i class="icon-resize-full"></i></button></li> -->
                 <!-- <li><button id='slides'  title="Slides"><i class="icon-play"></i></button></li> -->
-
-                <div id="identity" class="ui-widget-content ui-corner-all">
-                  <span id="welcome">
-                    Welcome <a class="brand" href="#"></a>
-		                <button id="AddContentButton" title="New..."><i class="fa fa-plus-square"></i> Post</button>
-                    <button id="SearchContentButton" title="Search and Filter Results"><i class="fa fa-search"></i> Search</button>
-        						<button onclick="startTalk(); return false;" title="Toggle Communicator"><i class="fa fa-phone-square"></i> Talk</button>
-                    <button id="SelectProfileButton" title="Select Profile"><i class="fa fa-user"></i> Profile</button>
-                    <a id="logout" class="logout ui-widget-content ui-corner-all" href="logout">Logout</a></div>
+                <div id="me"><a class="brand" href="#"></a></div>
+                <div id="identity" class="ui-widget-content ui-corner-all nt-highlight">
+                  <span id="welcome">          
+		                <button class="nt-both" id="AddContentButton" title="New..."><i class="fa fa-plus-square"></i><span class="button-text">Post</span></button>
+                    <button class="nt-both" id="SearchContentButton" title="Search and Filter Results"><i class="fa fa-search"></i><span class="button-text">Search</span></button>
+        						<button class="nt-both" onclick="startTalk(); return false;" title="Toggle Communicator"><i class="fa fa-phone-square"></i><span class="button-text">Talk</span></button>
+                    <button class="nt-both" id="SelectProfileButton" title="Select Profile"><i class="fa fa-user"></i><span class="button-text">Profile</span></button>
+                    <a id="logout" title="Click here to log out" class="logout nt-both" href="logout"><i class="fa dk fa-sign-out"></i></a>
         					</span>
-
+                </div>
   		            <div id="ViewControls">
                     <form>
-                        <input type="radio" id="goal" name="ViewControls" /><label for="goal">Goal</label>
+                        <input type="radio" id="list" name="ViewControls" /><label for="list">Feed</label>
                         <input type="radio" id="map" name="ViewControls" /><label for="map">Map</label>
-                        <input type="radio" id="list" name="ViewControls" /><label for="list">Browse</label>
-                        <input type="radio" id="self" name="ViewControls" /><label for="self">Team</label>
                         <input type="radio" id="graph" name="ViewControls" /><label for="graph">Graph</label>
+                        <input type="radio" id="goal" name="ViewControls" /><label for="goal">Goal</label>
+                        <input type="radio" id="self" name="ViewControls" /><label for="self">Team</label>
                         <input type="radio" id="trends" name="ViewControls" /><label for="trends">Trends</label>
                         <input type="radio" id="options" name="ViewControls" /><label for="options">Options</label>
                         <input type="radio" id="chat" name="ViewControls" /><label for="chat">Chat</label>
@@ -101,7 +100,7 @@
     		            <button id="FocusWhenButton">When?</button>
     		            <button id="FocusNeedButton">Need</button>
     		            <input id="FocusKeywords" type="text"></input>
-    		            <button id="FocusClearButton" title="Clear">[x]</button>
+    		            <button id="FocusClearButton" title="Clear"><i class="fa fa-trash-o"></i></button>
                     <div id="FocusEdit"></div>
                   </div>
             </div>

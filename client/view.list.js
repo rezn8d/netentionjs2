@@ -388,26 +388,25 @@ function renderList(s, o, v) {
 	var listRenderer = renderBrowseList;
 
 	var submenu = $('#toggle-submenu');
-	var slidesButton = $('<button style="width: 100%" title="Slides"><i class="fa fa-sliders"></i></button>');
+	var slidesButton = $('<button class="nt-both" style="width: 100%" title="Slides"><i class="fa fa-rotate-90 fa-sort"></i></button>');
 	slidesButton.click(function() {
 		listRenderer = renderBrowseSlides;
 		update();
 	});
-	var listButton = $('<button style="width: 100%" title="List"><i class="fa fa-th-list"></i></button>');
+	var listButton = $('<button class="nt-both" style="width: 100%" title="List"><i class="fa fa-th-list"></i></button>');
 	listButton.click(function() {
 		listRenderer = renderBrowseList;
 		update();
 	});
-	var gridButton = $('<button style="width: 100%" title="Grid"><i class="fa fa-th-large"></i></button>');
+	var gridButton = $('<button class="nt-both" style="width: 100%" title="Grid"><i class="fa fa-th-large"></i></button>');
 	gridButton.click(function() {
 		listRenderer = renderBrowseGrid;
 		update();
 	});
 
-	submenu.append(slidesButton);
 	submenu.append(listButton);
 	submenu.append(gridButton);
-
+	submenu.append(slidesButton);
 	
 	function updateFont(s) {
 		var vp = parseInt((0.15 + (s/8.0)) * 100)		
@@ -416,7 +415,7 @@ function renderList(s, o, v) {
 
 	var slideControls = newDiv();
 //	var textsizeSlider = $('<input id="v-slider" type="range" name="points" min="1" value="8" max="16">');
-	var textsizeSlider = $('<div id="v-slider" class="ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="bottom: 49%;width:20px;"></a></div><input style="text-align:center;width:100%" type="text" id="amount" value="">');
+	var textsizeSlider = $('<input class="nt-both nt-border-alt" title="Current font size" style="text-align:center;width:100%;margin-top:20px" type="text" id="amount" value=""><div id="v-slider" class="ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all nt-border-alt" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="bottom: 49%;width:20px;"></a></div>');
 	textsizeSlider.change(function(x) {
 		updateFont($(this).val());
 	});
@@ -426,19 +425,20 @@ function renderList(s, o, v) {
 
 	submenu.append(slideControls);
 
-$("#v-slider").slider({
-    orientation: "vertical",
-    range: "min",
-    min: 4,
-    max: 36,
-    value: 12,
-    slide: function (event, ui) {
-        $("#amount").val(ui.value);
-        updateFont(ui.value);
-    }
-});
-$("#amount").val($("#v-slider").slider("value"));
-updateFont(12);
+	// FONT SIZE SLIDER
+	$("#v-slider").slider({
+	    orientation: "vertical",
+	    range: "min",
+	    min: 4,
+	    max: 36,
+	    value: 12,
+	    slide: function (event, ui) {
+	        $("#amount").val(ui.value);
+	        updateFont(ui.value);
+	    }
+	});
+	$("#amount").val($("#v-slider").slider("value"));
+	updateFont(12);
 
 	function update() {
 		v.html('');
