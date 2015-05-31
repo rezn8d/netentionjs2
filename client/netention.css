@@ -1155,15 +1155,16 @@ a.openModal:focus {
 
 
 .cesiumContainer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      margin: 0;
-      overflow: hidden;
-      padding: 0;
-      font-family: sans-serif;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right:0  !important;
+      bottom:0  !important;
+      height: 100% !important;
+      width: 100% !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+      padding: 0 !important;
 }
 
 

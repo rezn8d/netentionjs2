@@ -13,7 +13,7 @@ function renderCesiumMap(o, v) {
 		vv.attr('class', 'cesiumContainer');
 		v.append(vv);
 	
-		viewer = cc.cesium = new Cesium.CesiumWidget(ee);
+		viewer = cc.cesium = new Cesium.Viewer(ee);
 		updateMap();
 	}
 
@@ -24,16 +24,14 @@ function renderCesiumMap(o, v) {
 			return;
 
 		var scene = viewer.scene;
-		var ellipsoid = viewer.centralBody.getEllipsoid();
-		var primitives = scene.getPrimitives();
 
 		function addPrimitive(p) {
-			var x = primitives.add(p);
+			var x = scene.primitives.add(p);
 			plist.push(x);
 		}
 		function clearPrimitives() {
 			for (var i = 0; i < plist.length; i++)
-				primitives.remove( plist[i] );
+				scene.primitives.remove( plist[i] );
 			plist = [];
 		}
 		clearPrimitives();
@@ -43,14 +41,11 @@ function renderCesiumMap(o, v) {
 		var imageMaterials = { };
 
 		function newCircle(lat, lon, radiusMeters, vertexAngle, r, g, b, a, iconURL) {
-			var poly = new Cesium.Polygon({
-		        positions : Cesium.Shapes.computeCircleBoundary(
-		            ellipsoid,
-		            ellipsoid.cartographicToCartesian(Cesium.Cartographic.fromDegrees(lon, lat)),
-		            radiusMeters,
-					vertexAngle
-					)
-		    });
+			var poly = new Cesium.CircleGeometry({
+			  center : Cesium.Cartesian3.fromDegrees(lon, lat),
+			  radius : radiusMeters,
+			  extrudedHeight: 10
+			});
 			if (iconURL) {
 				if (imageMaterials[iconURL]) {
 					poly.material = imageMaterials[iconURL];
@@ -83,6 +78,27 @@ function renderCesiumMap(o, v) {
 
 	    function createMarker(uri, lat, lon, rad, opacity, fill, iconURL) {		
 			/*
+
+    viewer.entities.add({
+        position : Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
+        billboard : {
+            image : '../images/Cesium_Logo_overlay.png', // default: undefined
+            show : true, // default
+            pixelOffset : new Cesium.Cartesian2(0, -50), // default: (0, 0)
+            eyeOffset : new Cesium.Cartesian3(0.0, 0.0, 0.0), // default
+            horizontalOrigin : Cesium.HorizontalOrigin.CENTER, // default
+            verticalOrigin : Cesium.VerticalOrigin.BOTTOM, // default: CENTER
+            scale : 2.0, // default: 1.0
+            color : Cesium.Color.LIME, // default: WHITE
+            rotation : Cesium.Math.PI_OVER_FOUR, // default: 0.0
+            alignedAxis : Cesium.Cartesian3.ZERO, // default
+            width : 100, // default: undefined
+            height : 25 // default: undefined
+        }
+    });
+
+
+
 					var primitives = scene.getPrimitives();
 					var image = new Image();
 					image.onload = function() {
@@ -106,7 +122,7 @@ function renderCesiumMap(o, v) {
             for (var i = 0; i < xxrr.length; i++) {
                 var x = xxrr[i][0];
                 var r = xxrr[i][1];        
-				renderMapMarker(x, createMarker, r);
+			//	renderMapMarker(x, createMarker, r);
             }        
         });
 
@@ -116,9 +132,10 @@ function renderCesiumMap(o, v) {
 	if (!cesiumLoaded) {
 		cesiumLoaded = true;
 
-		loadCSS('http://cesium.agi.com/Cesium/Build/Cesium/Widgets/CesiumWidget/CesiumWidget.css');
+		loadCSS('/lib/cesium/1.9/Build/Cesium/Widgets/Viewer/Viewer.css');
+		loadCSS('/lib/cesium/1.9/Build/Cesium/Widgets/Widgets.css');
 
-        LazyLoad.js("http://cesium.agi.com/Cesium/Build/Cesium/Cesium.js", render);
+    LazyLoad.js("/lib/cesium/1.9/Build/Cesium/Cesium.js", render);
 	}
 	else {
 		render();
