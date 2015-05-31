@@ -133,7 +133,7 @@ function renderCesiumMap(o, v) {
 		cesiumLoaded = true;
 
 		loadCSS('/lib/cesium/1.9/Build/Cesium/Widgets/Viewer/Viewer.css');
-		loadCSS('/lib/cesium/1.9/Build/Cesium/Widgets/Widgets.css');
+		loadCSS('/lib/cesium/1.9/Build/Cesium/Widgets/widgets.css');
 
     LazyLoad.js("/lib/cesium/1.9/Build/Cesium/Cesium.js", render);
 	}
