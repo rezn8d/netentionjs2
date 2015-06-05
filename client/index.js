@@ -144,7 +144,7 @@ function setTheme(t) {
 */    
     $('head').append('<link class="themecss" href="' + themeURL + '" type="text/css" rel="stylesheet"/>');
     if (inverse) {
-        $('head').append('<link class="themecss" href="/theme/black-background.css" type="text/css" rel="stylesheet"/>');
+        $('head').append('<link class="themecss" href="theme/black-background.css" type="text/css" rel="stylesheet"/>');
     }
     
 }
@@ -203,7 +203,7 @@ $(document).ready(function() {
 
         self.clear();
 
-        self.loadSchemaJSON('/schema/json', function() {            
+        self.loadSchemaJSON('schema/json', function() {            
             ll.pnotify({
                     text: 'Schema ready. Loading objects...'
             });

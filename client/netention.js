@@ -472,7 +472,7 @@ function netention(f) {
 
             getLatestObjects : function(num, onFinished) {
                 var that = this;
-                $.getJSON('/object/latest/' + num + '/json', function(objs) {
+                $.getJSON('object/latest/' + num + '/json', function(objs) {
                 	for (var k = 0; k < objs.length; k++) {
             			var x = objs[k];
             			that.notice(x);
@@ -663,7 +663,7 @@ function netention(f) {
             },
             
             getServerAttention : function(withResults) {
-                $.getJSON('/attention', function(attention) {
+                $.getJSON('attention', function(attention) {
                     withResults(attention);
                 }); 
             },

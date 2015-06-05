@@ -15,7 +15,11 @@ var http = require('http')
 var mongo = require("mongojs");
 var request = require('request');
 var _ = require('underscore');
+var path = require('path');
 
+
+var clientIndex = path.normalize(__dirname + '/../client/index.html');
+var clientConfiguration = path.normalize('./client.js');
 
 
 function plugin(netention, kv) {
@@ -76,8 +80,14 @@ exports.plugin = plugin;
 /**
  * init - callback function that is invoked after the server is created but before it runs
  */
-exports.start = function(host, port, dbURL, init) {
+exports.start = function(host, port, dbURL, options) {
 
+    if (!options) options = { };
+    options = {
+        init: options.init || function() { /* empty */ },
+        httpCompress: options.httpCompress || true
+    };
+    
     console.log('Starting');
 
     var Server = {
@@ -624,7 +634,11 @@ exports.start = function(host, port, dbURL, init) {
 
     io.enable('browser client minification');  // send minified client
     io.enable('browser client etag');          // apply etag caching logic based on version number
-    io.enable('browser client gzip');          // gzip the file
+
+    if (options.httpCompress) {
+        io.enable('browser client gzip');          // gzip the file
+    }
+        
     io.set('log level', 1);                    // reduce logging
     io.set('transports', [// enable all transports (optional if you want flashsocket)
         'websocket'
@@ -719,10 +733,11 @@ exports.start = function(host, port, dbURL, init) {
         req.session.cookie.expires = false;
         //res.redirect('/');  
         
-        res.sendfile('./client/index.html');
+        
+        res.sendfile(clientIndex);
     });
-    express.get('/client_configuration.js', function(req, res) {        
-        res.sendfile("./client.js");        
+    express.get('/client_configuration.js', function(req, res) {       
+        res.sendfile(clientConfiguration);        
     });
 
     // Accept the OpenID identifier and redirect the user to their OpenID
@@ -765,14 +780,16 @@ exports.start = function(host, port, dbURL, init) {
     //Gzip compression
     express.use(connect.compress());
     //express.use(expressm.staticCache());
-    express.use("/plugin", expressm.static('./plugin' , staticContentConfig ));
-    express.use("/doc", expressm.static('./doc' , staticContentConfig ));
+    express.use("/plugin", expressm.static(__dirname + '/../plugin' , staticContentConfig ));
+    express.use("/doc", expressm.static(__dirname + '/../doc' , staticContentConfig ));
     //express.use("/kml", expressm.static('./client/kml' , staticContentConfig ));
-    express.use("/", expressm.static('./client' , staticContentConfig));        
+    express.use("/", expressm.static(__dirname + '/../client' , staticContentConfig));        
 
     express.post('/upload', function(req, res) {
         //TODO validate permission to upload
 
+        //TODO create upload/ if not exists
+        
         var temp_path = req.files.uploadfile.path;
         var save_path = './upload/' + util.uuid() + '_' + req.files.uploadfile.name;
 
@@ -894,7 +911,9 @@ exports.start = function(host, port, dbURL, init) {
             res.cookie('authenticated', isAuthenticated(req.session));
         
         res.cookie('clientID', getCurrentClientID(req.session));
-        res.sendfile('./client/index.html');
+        
+
+        res.sendfile(clientIndex);
     });
     
     /*
@@ -1657,7 +1676,7 @@ exports.start = function(host, port, dbURL, init) {
 			});
 		}
 
-        fs.readdirSync("./plugin").forEach(function(ifile) {
+        fs.readdirSync(__dirname + "/../plugin").forEach(function(ifile) {
 			var file = ifile + '';
             if (file === 'README')
                 return;
@@ -1673,7 +1692,7 @@ exports.start = function(host, port, dbURL, init) {
 
     nlog('Ready');
 
-    init(that);
+    options.init(that);
 
     return that;
 
