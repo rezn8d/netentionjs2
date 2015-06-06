@@ -1,3 +1,4 @@
+"use strict";
 /*!
  * netention.js v1.2 - client-side functionality
  * Attentionated by @automenta and @rezn8d
@@ -70,10 +71,10 @@ function netention(f) {
 				this.set('clientID', 'undefined');
             },
             
-            id : function() { return this.get('clientID'); },
+            id: function() { return this.get('clientID'); },
 
-            tag : function(t) { return this.tags()[t]; },            
-            tags : function() { return this.get('tags'); },
+            tag: function(t) { return this.tags()[t]; },            
+            tags: function() { return this.get('tags'); },
             
             tagRoots: function() {
                 var that = this;
@@ -165,15 +166,16 @@ function netention(f) {
                 return this.get('layer');
             },            
             
-            myself: function() { return this.getSelf(this.id());  },
-                /*if (!o) {
+            myself: function() { 
+                var o = this.getSelf(this.id());
+                if (!o) {
                     o = objNew('Self-' + this.id(), 'Anonymous');
                     objAddTag(o, 'Human');
                     objAddTag(o, 'User');                    
                     this.setObject(o);
                 }
-                return o;*/
-            //},
+                return o;
+            },
             
             become: function(target) {
                 if (!target)
@@ -244,10 +246,15 @@ function netention(f) {
                                     
                 var socket = this.socket
                 if (!socket) {
-                    socket = io.connect('/', {
+                    var wlp = window.location.pathname;
+                    var wsurl = wlp.substring(1, wlp.lastIndexOf('/')) + '/socket.io';
+                    console.log('Websocket connect', wsurl);
+                    socket = io.connect('/',
+                    {
                         'transports': [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling' ],
                         'reconnect': true,
-                        'try multiple transports': true                    
+                        'try multiple transports': true,
+                        'resource': wsurl
                     });
                 }
                 
@@ -698,6 +705,7 @@ function netention(f) {
 
     if ((s.get('clientID')!='undefined') || (getCookie('authenticated')==='true'))
 	    s.connect(function() { });
+	    
 
     f(s);
 		

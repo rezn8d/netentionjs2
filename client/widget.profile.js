@@ -15,9 +15,16 @@ function newProfileWidget() {
     var deleteButton = $('<button class="identity" >Delete</button>');
 
 	function disableBecome() {
+	    selector.hide();
+	    okButton.hide();
+	    deleteButton.hide();
+	    
+	    d.prepend("There are no other profiles to choose.  If you create additional ones, you will be able to select among them here.");
+	    /*
         selector.attr('disabled', 'disabled');
         okButton.attr('disabled', 'disabled');
-        deleteButton.attr('disabled', 'disabled');
+        deleteButton.attr('disabled', 'disabled');*/
+        
 	}
 
     var otherSelves = self.get('otherSelves');

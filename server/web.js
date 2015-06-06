@@ -79,6 +79,7 @@ exports.plugin = plugin;
 
 /**
  * init - callback function that is invoked after the server is created but before it runs
+   TODO rename 'host' to 'url' because it can be at a path on a host other than '/'
  */
 exports.start = function(host, port, dbURL, options) {
 
@@ -98,7 +99,7 @@ exports.start = function(host, port, dbURL, options) {
         permissions: {},
     };
 
-    Server.host = host;
+    Server.host = host; 
     Server.port = port;  
     Server.databaseURL = dbURL;
 
@@ -591,11 +592,11 @@ exports.start = function(host, port, dbURL, options) {
 
     function nlog(x) {
 
-        var xs = x;
-        if (typeof(x) != "string")
-            xs = JSON.stringify(x, null, 4);
+        //var xs = x;
+        //if (typeof(x) != "string")
+          //  xs = JSON.stringify(x, null, 4);
 
-        var msg = new Date() + ': ' + xs;
+        var msg = [Date.now(),x];
 
         console.log(x);
         logMemory.push(msg);
@@ -620,6 +621,10 @@ exports.start = function(host, port, dbURL, options) {
         else
             p = JSON.stringify(x, null, 4);
         res.end(p);
+    }
+    
+    function reload(req, res) {
+        res.redirect(req.get('referer'));
     }
 
     http.globalAgent.maxSockets = 256;
@@ -654,6 +659,24 @@ exports.start = function(host, port, dbURL, options) {
     var SessionSockets = require('session.socket.io')
             , sessionSockets = new SessionSockets(io, sessionStore, cookieParser);
 
+
+    var indexHandler = function(req, res) {
+        //console.log('auth cookie', res.cookie('authenticated'));
+        
+        var anonymous = false;
+        if (req.headers.cookie)
+            if (res.cookie('authenticated') === 'anonymous')
+                anonymous = true;
+        
+        if (!anonymous)
+            res.cookie('authenticated', isAuthenticated(req.session));
+        
+        res.cookie('clientID', getCurrentClientID(req.session));
+        
+
+        res.sendfile(clientIndex);
+    };
+    
     //PASSPORT -------------------------------------------------------------- 
     var passport = require('passport')
             , OpenIDStrategy = require('passport-openid').Strategy
@@ -731,11 +754,21 @@ exports.start = function(host, port, dbURL, options) {
         res.cookie('authenticated', 'anonymous');
         res.cookie('clientID', '');
         req.session.cookie.expires = false;
-        //res.redirect('/');  
-        
         
         res.sendfile(clientIndex);
     });
+    
+    express.get('/logout', function(req, res) {
+        //nlog(['Logout', clientID... ]);
+        
+        res.cookie('authenticated', 'false');
+        res.cookie('clientID', 'undefined');
+        //req.logout();
+        //res.redirect('.');
+
+        res.sendfile(clientIndex);
+    });
+    
     express.get('/client_configuration.js', function(req, res) {       
         res.sendfile(clientConfiguration);        
     });
@@ -899,22 +932,7 @@ exports.start = function(host, port, dbURL, options) {
     } */               
     
 
-    express.get('/', function(req, res) {
-        //console.log('auth cookie', res.cookie('authenticated'));
-        
-        var anonymous = false;
-        if (req.headers.cookie)
-            if (res.cookie('authenticated') === 'anonymous')
-                anonymous = true;
-        
-        if (!anonymous)
-            res.cookie('authenticated', isAuthenticated(req.session));
-        
-        res.cookie('clientID', getCurrentClientID(req.session));
-        
-
-        res.sendfile(clientIndex);
-    });
+    express.get('/', indexHandler);
     
     /*
      express.get('/http/:url', function (req, res) {
@@ -992,7 +1010,7 @@ exports.start = function(host, port, dbURL, options) {
         });
     });*/
     express.get('/users/json', function(req, res) {
-       res.redirect('/tag/User/json');        
+       res.redirect('tag/User/json');        
     });
     express.get('/users/tag/rdf', function(req, res) {
         var rdfstore = require('rdfstore');
@@ -1099,7 +1117,7 @@ exports.start = function(host, port, dbURL, options) {
     });
     express.get('/object/:uri', function(req, res) {
         var uri = req.params.uri;
-        res.redirect('/object.html?id=' + uri);
+        res.redirect('object.html?id=' + uri);
     });
     express.get('/object/:uri/json', function(req, res) {
         var uri = req.params.uri;
@@ -1152,12 +1170,7 @@ exports.start = function(host, port, dbURL, options) {
         //console.log(request.body.user.email);
 
     });
-    express.get('/logout', function(req, res) {
-        res.cookie('authenticated', '');
-        res.cookie('clientID', 'undefined');
-        req.logout();
-        res.redirect('/');
-    });
+  
 
     express.get('/report', function(req, res) {
         getReport(

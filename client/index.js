@@ -294,7 +294,11 @@ $(document).ready(function() {
 
                     if (isAnonymous()) {
                         //show profile chooser
-                        openSelectProfileModal("Anonymous Profiles");
+                        var otherSelves = self.get('otherSelves');
+                        if (otherSelves) {
+                            //only show the selector on startup if there are multiple Anonymous accounts
+                            openSelectProfileModal("Anonymous Profiles");
+                        }
                     }
                     else if (self.myself() === undefined)  {
                         if (configuration.requireIdentity)

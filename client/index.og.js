@@ -152,7 +152,7 @@ function setTheme(t) {
 
 
 function popupAboutDialog() {
-    $.get('/about.html', function(d) {
+    $.get('about.html', function(d) {
         var p = newPopup('About'); 
         p.html(d);
     });

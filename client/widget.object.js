@@ -260,14 +260,14 @@ function newObjectEdit(ix, editable, hideWidgets, onTagRemove, whenSliderChange)
             //$('#FocusEdit button').button();       
             /*
 
-                                    <button title="What?" id="AddWhatButton"><img src="/icon/rrze/emblems/information.png"></button>
-                                    <button title="How/Why?" id="AddDescriptionButton"><img src="/icon/rrze/actions/quote.png"></button>
-                                    <button title="When?" id="AddWhenButton" ><img src="/icon/clock.png"></button>
-                                    <button title="Where?" id="AddLocationButton"><img src="/icon/rrze/emblems/globe.png"></button>
-                                    <button title="Who?" id="AddWhoButton"><img src="/icon/rrze/categories/user-group.png"></button>
+                                    <button title="What?" id="AddWhatButton"><img src="icon/rrze/emblems/information.png"></button>
+                                    <button title="How/Why?" id="AddDescriptionButton"><img src="icon/rrze/actions/quote.png"></button>
+                                    <button title="When?" id="AddWhenButton" ><img src="icon/clock.png"></button>
+                                    <button title="Where?" id="AddLocationButton"><img src="icon/rrze/emblems/globe.png"></button>
+                                    <button title="Who?" id="AddWhoButton"><img src="icon/rrze/categories/user-group.png"></button>
 
 
-                                    <button title="Upload"><img src="/icon/rrze/actions/dial-in.png"/></button>                
+                                    <button title="Upload"><img src="icon/rrze/actions/dial-in.png"/></button>                
                                     <!--<button>Save Privately...</button>-->
                                     <!-- <button onclick="javascript:cloneFocus();" title="Clone"><span class="FocusButtonIcon ui-icon ui-icon-newwin"></span><span class="FocusButtonLabel">Clone</span></button> -->
                                     <!-- <button onclick="javascript:deleteFocus();" title="Delete"><span class="FocusButtonIcon ui-icon ui-icon-trash"></span><span class="FocusButtonLabel">Delete</span></button> -->
@@ -317,7 +317,7 @@ function newObjectEdit(ix, editable, hideWidgets, onTagRemove, whenSliderChange)
         d.addClass('ObjectEditDiv');
         
         if (hideWidgets!=true) {
-            var whatButton = $('<button title="What?"><img src="/icon/rrze/emblems/information.png"></button>');
+            var whatButton = $('<button title="What?"><img src="icon/rrze/emblems/information.png"></button>');
             whatButton.click(function() {
                 var p = newPopup('Select Tags for ' + nameInput.val(), { modal: true, position: 'center', minWidth: 400 } );
                 p.append(newTagger([], function(t) {
@@ -331,31 +331,31 @@ function newObjectEdit(ix, editable, hideWidgets, onTagRemove, whenSliderChange)
             });
             d.append(whatButton);
 
-            var howButton = $('<button title="How/Why?" id="AddDescriptionButton"><img src="/icon/rrze/actions/quote.png"></button>');
+            var howButton = $('<button title="How/Why?" id="AddDescriptionButton"><img src="icon/rrze/actions/quote.png"></button>');
             howButton.click(function() {
                 update(objAddValue(getEditedFocus(), 'textarea', ''));            
             });
             d.append(howButton);
 
-            var whenButton = $('<button disabled title="When?" id="AddWhenButton" ><img src="/icon/clock.png"></button>');
+            var whenButton = $('<button disabled title="When?" id="AddWhenButton" ><img src="icon/clock.png"></button>');
             d.append(whenButton);
 
-            var whereButton = $('<button title="Where?"><img src="/icon/rrze/emblems/globe.png"></button>');
+            var whereButton = $('<button title="Where?"><img src="icon/rrze/emblems/globe.png"></button>');
             whereButton.click(function() {
                 update(objAddValue(getEditedFocus(), 'spacepoint', ''));            
             });
             d.append(whereButton);
 
-            var whoButton = $('<button disabled title="Who?" id="AddWhoButton"><img src="/icon/rrze/categories/user-group.png"></button>');
+            var whoButton = $('<button disabled title="Who?" id="AddWhoButton"><img src="icon/rrze/categories/user-group.png"></button>');
             d.append(whoButton);
 
-            var drawButton = $('<button title="Draw"><img src="/icon/rrze/emblems/pen.png"/></button>');
+            var drawButton = $('<button title="Draw"><img src="icon/rrze/emblems/pen.png"/></button>');
 			drawButton.click(function() {
                 update(objAddValue(getEditedFocus(), 'sketch', ''));            
 			});
 			d.append(drawButton);
 
-            var uploadButton = $('<button title="Upload"><img src="/icon/rrze/actions/dial-in.png"/></button>');
+            var uploadButton = $('<button title="Upload"><img src="icon/rrze/actions/dial-in.png"/></button>');
             uploadButton.click(function() {
 
 				var y = newDiv();
