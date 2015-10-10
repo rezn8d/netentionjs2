@@ -181,7 +181,7 @@ exports.start = function(host, port, dbURL, options) {
     
 
     function loadState(f) {
-        var db = mongo.connect(getDatabaseURL(), collections);
+        var db = mongo(getDatabaseURL(), collections);
 
         db.obj.find({tag: {$in: ['ServerState']}}).limit(1).sort({when: -1}, function(err, objs) {
             db.close();
@@ -235,7 +235,7 @@ exports.start = function(host, port, dbURL, options) {
 
         //TODO move to 'removed' db collection
 
-        var db = mongo.connect(getDatabaseURL(), collections);
+        var db = mongo(getDatabaseURL(), collections);
         db.obj.remove({id: objectID}, function(err, docs) {
             db.close();
 
@@ -249,7 +249,7 @@ exports.start = function(host, port, dbURL, options) {
                 pub(objectRemoved(objectID));
 
                 //remove replies                
-                var db2 = mongo.connect(getDatabaseURL(), collections);
+                var db2 = mongo(getDatabaseURL(), collections);
                 db2.obj.remove({replyTo: objectID}, function(err, docs) {
                     db2.close();
                     
@@ -296,7 +296,7 @@ exports.start = function(host, port, dbURL, options) {
 
         attention.notice(o, 0.1);
 
-        var db = mongo.connect(getDatabaseURL(), collections);
+        var db = mongo(getDatabaseURL(), collections);
         db.obj.update({id: o.id}, o, {upsert: true}, function(err) {
             db.close();
             if (err) {
@@ -356,7 +356,7 @@ exports.start = function(host, port, dbURL, options) {
             whenFinished(tags[uri]);
         }
         else {
-            var db = mongo.connect(getDatabaseURL(), collections);
+            var db = mongo(getDatabaseURL(), collections);
             db.obj.find({'id': uri}, function(err, docs) {
                 db.close();
                 if (err) {
@@ -372,7 +372,7 @@ exports.start = function(host, port, dbURL, options) {
     }
 
     function getObjectsByAuthor(a, withObjects) {
-        var db = mongo.connect(getDatabaseURL(), collections);
+        var db = mongo(getDatabaseURL(), collections);
         db.obj.find({author: a}, function(err, docs) {
             if (err) {
                 nlog('getObjectsByAuthor: ' + err);
@@ -390,7 +390,7 @@ exports.start = function(host, port, dbURL, options) {
     function getObjectsByTag(t, withObject, whenFinished) {
         //t can be a single string, or an array of strings
         
-        var db = mongo.connect(getDatabaseURL(), collections);
+        var db = mongo(getDatabaseURL(), collections);
 
 		/*
 		var finished = false;
@@ -429,7 +429,7 @@ exports.start = function(host, port, dbURL, options) {
 
     /*
      function getObjectsByTags(tags, withObjects) {
-     var db = mongo.connect(getDatabaseURL(), collections);
+     var db = mongo(getDatabaseURL(), collections);
      db.obj.find({ tag: { $in: tags } }, function(err, docs) {
      
      db.close();
@@ -446,7 +446,7 @@ exports.start = function(host, port, dbURL, options) {
      */
 
     function getReport(lat, lon, whenStart, whenStop, withReport) {
-        var db = mongo.connect(getDatabaseURL(), collections);
+        var db = mongo(getDatabaseURL(), collections);
 
         var histogram = {};
         var numBins = 38;
@@ -504,7 +504,7 @@ exports.start = function(host, port, dbURL, options) {
 
     function getTagCounts(whenFinished) {
 
-        var db = mongo.connect(getDatabaseURL(), collections);
+        var db = mongo(getDatabaseURL(), collections);
         db.obj.find(function(err, docs) {
             if (err) {
                 nlog('getTagCounts: ' + err);
@@ -541,7 +541,7 @@ exports.start = function(host, port, dbURL, options) {
         Server.when = t;
 
 
-        var db = mongo.connect(getDatabaseURL(), collections);
+        var db = mongo(getDatabaseURL(), collections);
 
         db.obj.save(Server, function(err, saved) {
             db.close();
@@ -960,7 +960,7 @@ exports.start = function(host, port, dbURL, options) {
     });
     express.get('/object/latest/:num/json', function(req, res) {
         var n = parseInt(req.params.num);
-        var db = mongo.connect(getDatabaseURL(), collections);
+        var db = mongo(getDatabaseURL(), collections);
         db.obj.find().limit(n).sort({modifiedAt: -1}, function(err, objs) {
             removeMongoID(objs);
             
@@ -1519,7 +1519,7 @@ exports.start = function(host, port, dbURL, options) {
          */
 
         socket.on('getObjects', function(query, withObjects) {
-            var db = mongo.connect(getDatabaseURL(), collections);
+            var db = mongo(getDatabaseURL(), collections);
             db.obj.find(function(err, docs) {
                 removeMongoID(docs);
                 withObjects(docs);

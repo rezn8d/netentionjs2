@@ -1,4 +1,4 @@
-![Netention logo](https://raw.github.com/automenta/netentionjs2/master/doc/netention_logo_6.small.png)
+![Netention logo](https://raw.github.com/rezn8d/netentionjs2/master/doc/netention_logo_6.small.png)
 
 Netention for Node.JS
 =====================
@@ -17,17 +17,17 @@ Netention aims to solve, in general, all resource management and planning issues
 
 Netention is under development and is experimental.  Use at your own risk
 
-[User Guide](https://github.com/automenta/netentionjs2/blob/master/doc/netention_user_guide.md)
+[User Guide](https://github.com/rezn8d/netentionjs2/blob/master/doc/netention_user_guide.md)
 *   What it does
 *   How to use it
 *   Netention Theory (philoso-ware)
 
-[System Guide](https://github.com/automenta/netentionjs2/blob/master/doc/netention_system_guide.md)
+[System Guide](https://github.com/rezn8d/netentionjs2/blob/master/doc/netention_system_guide.md)
 *   System requirements
 *   How to install
 *   How to maintain and administer a Netention node
 
-[Development Plan](https://github.com/automenta/netentionjs2/blob/master/doc/netention_development_plan.md)
+[Development Plan](https://github.com/rezn8d/netentionjs2/blob/master/doc/netention_development_plan.md)
 *   Features
 *   Planned improvements and fixes
 
@@ -67,4 +67,4 @@ Join in the discussion, don't be afraid to ask questions, and THINK BIG!
 * IRC Channel: freenode.net #netention
 * Blog: http://blog.automenta.com
 
-![Netention logo](https://raw.github.com/automenta/netentionjs2/master/doc/netention_logo_1.png)
+![Netention logo](https://raw.github.com/rezn8d/netentionjs2/master/doc/netention_logo_1.png)
