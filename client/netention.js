@@ -247,7 +247,7 @@ function netention(f) {
                 var socket = this.socket
                 if (!socket) {
                     var wlp = window.location.pathname;
-                    var wsurl = wlp.substring(1, wlp.lastIndexOf('/')) + '/socket.io';
+                    var wsurl = 'socket.io';
                     console.log('Websocket connect', wsurl);
                     socket = io.connect('/',
                     {
